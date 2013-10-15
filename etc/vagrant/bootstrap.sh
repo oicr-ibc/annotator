@@ -7,7 +7,7 @@ apt-get install -y python-software-properties python build-essential openssl lib
 # from weird PPA repositories.
 
 cd
-wget http://nodejs.org/dist/node-latest.tar.gz
+wget -q http://nodejs.org/dist/node-latest.tar.gz
 mkdir node-latest
 cd node-latest
 tar xvz --strip-components=1 < ../node-latest.tar.gz
@@ -19,7 +19,7 @@ rm -rf node-latest
 # Okay, we won't do an nginx install, as that isn't really helpful. But we do need a 
 # decent Perl. 
 
-wget http://www.cpan.org/src/5.0/perl-5.18.1.tar.gz
+wget -q http://www.cpan.org/src/5.0/perl-5.18.1.tar.gz
 mkdir perl-latest
 cd perl-latest
 tar xvz --strip-components=1 < ../perl-5.18.1.tar.gz
@@ -29,7 +29,7 @@ cd
 rm -rf perl-latest
 
 # Give me cpanm and a few important modules
-wget -O - http://cpanmin.us | perl - --sudo App::cpanminus
+wget -q -O - http://cpanmin.us | perl - --sudo App::cpanminus
 cpanm File::Listing
 cpanm LWP::Simple
 cpanm DBI
@@ -37,8 +37,22 @@ cpanm DBI
 # So now we can start setting up the Ensembl basics. 
 
 cd
-wget -O variant_effect_predictor.tar.gz \
+wget -q -O variant_effect_predictor.tar.gz \
 "http://cvs.sanger.ac.uk/cgi-bin/viewvc.cgi/ensembl-tools/scripts/variant_effect_predictor.tar.gz?view=tar&root=ensembl&pathrev=branch-ensembl-73"
 tar xvfz variant_effect_predictor.tar.gz
 cd variant_effect_predictor
-perl INSTALL.pl
+yes "n" | perl INSTALL.pl
+
+# Now we can download the data. Use rsync as it is much faster than FTP, and when it is 
+# available, also much less problematic in terms of funny port usage. 
+cd /tmp
+rsync -v rsync://ftp.ensembl.org/ensembl/pub/release-73/variation/VEP/homo_sapiens_vep_73.tar.gz .
+cd
+cd .vep
+tar xfz /tmp/homo_sapiens_vep_73.tar.gz
+rm /tmp/homo_sapiens_vep_73.tar.gz
+
+# We also need the FASTA files
+cd
+rsync -v rsync://ftp.ensembl.org/ensembl/pub/release-73/fasta/homo_sapiens/dna/Homo_sapiens.GRCh37.73.dna.primary_assembly.fa.gz .
+gzip -d /tmp/Homo_sapiens.GRCh37.73.dna.primary_assembly.fa.gz
