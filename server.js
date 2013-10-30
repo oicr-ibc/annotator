@@ -1,9 +1,10 @@
 var fs = require("fs"),
     express = require('express')
     nconf = require('nconf'),
+    path = require('path'),
     winston = require('winston');
 
-var logger = new (winston.Logger)({
+var logger = module.exports.logger = new (winston.Logger)({
   transports: [
     new (winston.transports.Console)({colorize: true, timestamp: true}),
   ]
@@ -19,8 +20,11 @@ nconf
   .file({ file: configFile });
 
 nconf.defaults({
-  'server:port': 3000,
+  'server:port': 3001,
   'server:address': "0.0.0.0",
+  'basedir': ".",
+  'baseurl': "http://localhost:3001/",
+  'commandsdir': path.resolve(__dirname, 'commands'),
   'debug': true
 });
 
@@ -71,3 +75,4 @@ if(!process.argv[2] || !process.argv[2].indexOf("expresso")) {
   app.listen(config['server']['port'], config['server']['address']);
   logger.info(("Express server listening on port " + config['server']['port']));
 }
+
