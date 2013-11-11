@@ -48,8 +48,8 @@ yes "n" | perl INSTALL.pl
 # available, also much less problematic in terms of funny port usage. 
 cd /var/local/variant_effect_predictor
 rsync -v rsync://ftp.ensembl.org/ensembl/pub/release-73/variation/VEP/homo_sapiens_vep_73.tar.gz .
-tar xfz /tmp/homo_sapiens_vep_73.tar.gz
-rm /tmp/homo_sapiens_vep_73.tar.gz
+tar xfz homo_sapiens_vep_73.tar.gz
+rm homo_sapiens_vep_73.tar.gz
 
 # We also need the FASTA files
 cd /var/local/variant_effect_predictor
