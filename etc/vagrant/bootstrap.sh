@@ -54,7 +54,7 @@ rm homo_sapiens_vep_73.tar.gz
 # We also need the FASTA files
 cd /var/local/variant_effect_predictor
 rsync -v rsync://ftp.ensembl.org/ensembl/pub/release-73/fasta/homo_sapiens/dna/Homo_sapiens.GRCh37.73.dna.primary_assembly.fa.gz .
-gzip -d /tmp/Homo_sapiens.GRCh37.73.dna.primary_assembly.fa.gz
+gzip -d Homo_sapiens.GRCh37.73.dna.primary_assembly.fa.gz
 
 # Now all we need to do is write and start the RESTful API and link it up to a port where we
 # can provide a web service. Much of this will be an adapter for the various annotators, 
