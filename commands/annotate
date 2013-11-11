@@ -1,0 +1,23 @@
+#!/usr/bin/env perl 
+
+# This wrapper is started in a directory and should do some annotation.
+# It should use a Perl implementation and start VEP within that directory,
+# with all the right parameters. As this platform works entirely by convention
+# here are the files we expect. 
+#
+# This is not running in the same process as the main application, so we can't
+# directly access configuration values. If we need them, we'd need to process
+# them for ourselves. 
+
+use strict;
+use warnings;
+
+use File::Spec;
+
+my $curdir = File::Spec->curdir();
+my $input = File::Spec->rel2abs('input.vcf', $curdir);
+my $output = File::Spec->rel2abs('output.vcf', $curdir);
+
+my $executable = $^X;
+
+my @command = ($executable, )

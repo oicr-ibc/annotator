@@ -15,11 +15,11 @@ Vagrant.configure("2") do |config|
 
   # Redirect networking from host to guest
   # Now you can navigate to https://localhost:8888/
-  config.vm.network :forwarded_port, guest: 80, host: 8888
+  config.vm.network :forwarded_port, guest: 8000, host: 8006
 
   # For VirtualBox, set RAM availability. 
   config.vm.provider "virtualbox" do |v|
-    v.customize ["modifyvm", :id, "--memory", 1024]
+    v.customize ["modifyvm", :id, "--memory", 2048]
   end
   
 end

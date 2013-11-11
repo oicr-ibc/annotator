@@ -35,10 +35,7 @@ module.exports.config = config;
 
 app.configure(function(){
   app.locals.pretty = true;
-
-  app.use(express.static(process.cwd() + '/webapp', { maxAge: 1000 * 60 * 60 * 24 }));
   app.use(express.logger('dev'));
-
   app.use(express.methodOverride());
   app.use(express.bodyParser({
     keepExtensions: true,
@@ -46,10 +43,6 @@ app.configure(function(){
     defer: true  
   }));
 
-  app.use(express.cookieParser());
-  app.use(express.session({
-    secret: config["cookieSecret"]
-  }));
   app.use(app.router);
   app.use(logErrors);
   app.use(errorHandler);
@@ -61,14 +54,15 @@ app.configure(function(){
   // verify the existence of req.user for routes that we need authenticated. 
 });
 
+require('./lib/service');
+
 function logErrors(err, req, res, next) {
   logger.error(err.stack);
   next(err);
 }
 
 function errorHandler(err, req, res, next) {
-  res.status(500);
-  res.render('error', { error: err });
+  res.send(500, { error: err });
 }
 
 if(!process.argv[2] || !process.argv[2].indexOf("expresso")) {
