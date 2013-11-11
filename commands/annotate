@@ -18,6 +18,25 @@ my $curdir = File::Spec->curdir();
 my $input = File::Spec->rel2abs('input.vcf', $curdir);
 my $output = File::Spec->rel2abs('output.vcf', $curdir);
 
+# A bunch of values are local to the VEP script.
+
+my $vep_base = "/var/local/variant_effect_predictor";
+my $script = File::Spec->rel2abs("variant_effect_predictor.pl", $vep_base);
+my $cache_directory = $vep_base;
+my $fasta_directory = $vep_base;
+my $fork_count = 4;
+
 my $executable = $^X;
 
-my @command = ($executable, )
+my @command = qw($executable $script 
+	             --input_file $input --output_file $output --force_overwrite 
+	             --vcf --format vcf 
+	             --canonical --numbers --domains --pubmed
+	             --fork $fork_count
+	             --sift=b --polyphen=b 
+	             --offline --fasta $fasta_directory --dir $cache_directory --hgvs);
+
+# Being Perl, we can now exec() - this never returns, but is a good way to switch to
+# the new script.
+
+exec(@command) or die("couldn't exec: $!");
