@@ -25,7 +25,8 @@ nconf.defaults({
   'basedir': ".",
   'baseurl': "http://localhost:3001/",
   'commandsdir': path.resolve(__dirname, 'commands'),
-  'debug': true
+  'debug': true,
+  'version': '1.0'
 });
 
 var app = module.exports.app = express();
