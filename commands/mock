@@ -1,0 +1,28 @@
+#!/usr/bin/env perl 
+
+# This wrapper is started in a directory and should do some annotation.
+# It should use a Perl implementation and start VEP within that directory,
+# with all the right parameters. As this platform works entirely by convention
+# here are the files we expect. 
+#
+# This is not running in the same process as the main application, so we can't
+# directly access configuration values. If we need them, we'd need to process
+# them for ourselves. 
+
+use strict;
+use warnings;
+
+use POSIX qw(ctime);
+
+foreach my $i (1..1) {
+	my $time = ctime(time());
+	chomp($time);
+	print STDOUT "STDOUT: $time: Count: $i\n";
+	print STDERR "STDERR: $time: Count: $i\n";
+	sleep(10);
+}
+
+print STDOUT "STDOUT: Done\n";
+print STDERR "STDERR: Done\n";
+
+exit(0);
