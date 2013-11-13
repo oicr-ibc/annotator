@@ -21,6 +21,7 @@ my $json = JSON->new();
 
 my $request;
 my $response;
+my $url;
 
 ### Check that we can ping the main URL
 $response = $ua->get(URI->new_abs('/annotator', $base));
@@ -56,6 +57,18 @@ ok($response->is_success, "Successful POST ".URI->new($response_perl->{annotatio
 if (! $response->is_success) {
 	diag($response->content);
 }
+
+### When done, we should be able to read back the file that we just created.
+$url = URI->new($response_perl->{annotationFilesUrl});
+$url->path_segments($url->path_segments(), 'input');
+$response = $ua->get($url);
+
+ok($response->is_success, "Successful GET ".$url->path());
+if (! $response->is_success) {
+	diag($response->content);
+}
+
+is($response->content, "Line 1\nLine 2\n" x 100, "Got correct content back");
 
 done_testing();
 
