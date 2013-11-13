@@ -14,6 +14,23 @@ use warnings;
 
 use POSIX qw(ctime);
 
+use File::Spec;
+
+my $curdir = File::Spec->curdir();
+my $input = File::Spec->rel2abs('input', $curdir);
+my $output = File::Spec->rel2abs('output', $curdir);
+
+# A proper test should echo back a file. So we need a file to echo back.
+
+open(my $fh, "<", $input) or die("Can't open $input: $!");
+open(my $outfh, ">", $output) or die("Can't open $output: $!");
+while(my $line = <$fh>) {
+	chomp($line);
+	print $outfh "ECHO: $line\n"; 
+}
+close($outfh);
+close($fh);
+
 foreach my $i (1..1) {
 	my $time = ctime(time());
 	chomp($time);
