@@ -6,6 +6,7 @@ use warnings;
 use Test::More;
 
 use LWP::UserAgent;
+use HTTP::Request::Common;
 use JSON;
 
 my $base = "http://localhost:8006/";
@@ -18,6 +19,7 @@ $ua->env_proxy;
 
 my $json = JSON->new();
 
+my $request;
 my $response;
 
 ### Check that we can ping the main URL
@@ -43,6 +45,17 @@ ok(defined($response_perl), "Should parse response as JSON");
 ok(exists($response_perl->{identifier}), "Should contain an identifier");
 ok(exists($response_perl->{annotationFilesUrl}), "Should contain an annotationFilesUrl");
 ok(exists($response_perl->{annotationStatusUrl}), "Should contain an annotationStatusUrl");
+
+### Create a simple file on the server, that we can then use as input to the mock command
+$response = $ua->post($response_perl->{annotationFilesUrl},
+	[input => [undef, 'input', 'Content_Type' => 'text/plain', Content => "Line 1\nLine 2\n" x 100]],
+	'Content_Type' => 'form-data'
+);
+
+ok($response->is_success, "Successful POST ".URI->new($response_perl->{annotationFilesUrl})->path());
+if (! $response->is_success) {
+	diag($response->content);
+}
 
 done_testing();
 
