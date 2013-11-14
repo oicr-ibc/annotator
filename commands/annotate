@@ -15,8 +15,8 @@ use warnings;
 use File::Spec;
 
 my $curdir = File::Spec->curdir();
-my $input = File::Spec->rel2abs('input.vcf', $curdir);
-my $output = File::Spec->rel2abs('output.vcf', $curdir);
+my $input = File::Spec->rel2abs('input', $curdir);
+my $output = File::Spec->rel2abs('output', $curdir);
 
 # A bunch of values are local to the VEP script.
 
@@ -40,3 +40,4 @@ my @command = qw($executable $script
 # the new script.
 
 exec(@command) or die("couldn't exec: $!");
+
