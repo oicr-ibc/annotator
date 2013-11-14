@@ -70,6 +70,32 @@ if (! $response->is_success) {
 
 is($response->content, "Line 1\nLine 2\n" x 100, "Got correct content back");
 
+### Now let's trigger the process
+$url = URI->new($response_perl->{annotationStatusUrl});
+$url->query_form('running' => 'true', 'command' => 'mock');
+$response = $ua->put($url);
+ok($response->is_success, "Successful PUT ".$url->path());
+if (! $response->is_success) {
+	diag($response->content);
+}
+
+# At this stage, there should be a number of files that are starting to be accessible,
+# although we can't be totally specific about the pid being there instantly, for example. 
+# The status is the clue. 
+
+# Wait a moment, so we are likely to at least get a .pid file.
+sleep(1);
+
+$url = URI->new($response_perl->{annotationFilesUrl});
+$url->path_segments($url->path_segments(), '.pid');
+$response = $ua->get($url);
+ok($response->is_success, "Successful GET ".$url->path());
+if (! $response->is_success) {
+	diag($response->content);
+}
+
+
+
 done_testing();
 
 1;
