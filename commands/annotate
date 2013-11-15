@@ -28,13 +28,13 @@ my $fork_count = 2;
 
 my $executable = $^X;
 
-my @command = qw($executable $script 
-	             --input_file $input --output_file $output --force_overwrite 
-	             --vcf --format vcf 
-	             --canonical --numbers --domains --pubmed
-	             --fork $fork_count
-	             --sift=b --polyphen=b 
-	             --offline --fasta $fasta_directory --dir $cache_directory --hgvs);
+my @command = ($executable, $script, 
+	           '--input_file', $input, '--output_file', $output, '--force_overwrite', 
+	           '--vcf', '--format', 'vcf', 
+	           '--canonical', '--numbers', '--domains', '--pubmed',
+	           '--fork', $fork_count,
+	           '--sift=b', '--polyphen=b', 
+	           '--offline', '--fasta', $fasta_directory, '--dir', $cache_directory, '--hgvs');
 
 # Being Perl, we can now exec() - this never returns, but is a good way to switch to
 # the new script.
