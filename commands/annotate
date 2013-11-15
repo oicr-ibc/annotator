@@ -24,7 +24,7 @@ my $vep_base = "/var/local/variant_effect_predictor";
 my $script = File::Spec->rel2abs("variant_effect_predictor.pl", $vep_base);
 my $cache_directory = $vep_base;
 my $fasta_directory = $vep_base;
-my $fork_count = 4;
+my $fork_count = 2;
 
 my $executable = $^X;
 
