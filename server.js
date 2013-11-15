@@ -38,6 +38,7 @@ module.exports.config = config;
 app.configure(function(){
   app.locals.pretty = true;
   app.use(express.logger('dev'));
+
   app.use(express.methodOverride());
   app.use(express.bodyParser({
     keepExtensions: true,
@@ -45,6 +46,7 @@ app.configure(function(){
     defer: true  
   }));
 
+  app.use('/swagger', express.static(__dirname + '/swagger'));
   app.use(app.router);
   app.use(logErrors);
   app.use(errorHandler);
