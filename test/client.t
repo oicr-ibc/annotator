@@ -46,6 +46,7 @@ ok(defined($response_perl), "Should parse response as JSON");
 ok(exists($response_perl->{identifier}), "Should contain an identifier");
 ok(exists($response_perl->{annotationFilesUrl}), "Should contain an annotationFilesUrl");
 ok(exists($response_perl->{annotationStatusUrl}), "Should contain an annotationStatusUrl");
+ok(exists($response_perl->{annotationDeleteUrl}), "Should contain an annotationStatusUrl");
 
 ### Create a simple file on the server, that we can then use as input to the mock command
 $response = $ua->post($response_perl->{annotationFilesUrl},
@@ -118,6 +119,30 @@ if (! $response->is_success) {
 
 # At this stage, the status file should contain a zero.
 is(0 + $response->content, 0, "Final status should be zero");
+
+# And finally, let's read back the output file.
+$url = URI->new($response_perl->{annotationFilesUrl});
+$url->path_segments($url->path_segments(), 'output');
+$response = $ua->get($url);
+if (! $response->is_success) {
+	diag($response->content);
+}
+
+is($response->content, "ECHO: Line 1\nECHO: Line 2\n" x 100, "Checked modified output file from echo command");
+
+### When we are done, we can delete the command results
+$url = URI->new($response_perl->{annotationDeleteUrl});
+$response = $ua->delete($url);
+ok($response->is_success, "Successful DELETE ".$url->path());
+if (! $response->is_success) {
+	diag($response->content);
+}
+
+### And now we should now get a 404 back, even for the .pid
+$url = URI->new($response_perl->{annotationFilesUrl});
+$url->path_segments($url->path_segments(), '.pid');
+$response = $ua->get($url);
+is($response->code, 404, "GET ".$url->path()." should return a 404");
 
 done_testing();
 
