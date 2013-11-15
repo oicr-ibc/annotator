@@ -24,17 +24,17 @@ my $response;
 my $url;
 
 ### Check that we can ping the main URL
-$response = $ua->get(URI->new_abs('/annotator', $base));
+$response = $ua->get(URI->new_abs('/annotation', $base));
 
-ok($response->is_success, "Successful GET /annotator");
+ok($response->is_success, "Successful GET /annotation");
 if (! $response->is_success) {
 	diag($response->content);
 }
 
 ### Now, let's create and run a workflow
 my $form = {};
-$response = $ua->post(URI->new_abs('/annotator', $base), $form);
-ok($response->is_success, "Successful POST /annotator");
+$response = $ua->post(URI->new_abs('/annotation', $base), $form);
+ok($response->is_success, "Successful POST /annotation");
 if (! $response->is_success) {
 	diag($response->content);
 }
