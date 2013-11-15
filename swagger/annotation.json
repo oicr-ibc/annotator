@@ -60,6 +60,44 @@
                     "summary": "Returns descriptive information about the annotation system"
                 }
             ]
+        },
+        {
+            "path":"/annotation",
+            "description":"Create a new annotation",
+            "operations": [
+                {
+                    "httpMethod":"POST",
+                    "nickname": "createAnnotation",
+                    "type":"Annotation",
+                    "parameters": [],
+                    "summary": "Creates a new annotation instance"
+                }
+            ]
+        },
+        {
+            "path":"/annotation/{id}/files",
+            "description":"Upload files to an annotation instance",
+            "operations": [
+                {
+                    "httpMethod":"POST",
+                    "nickname": "uploadAnnotationFiles",
+                    "type":"void",
+                    "parameters": [{
+                        "paramType": "path",
+                        "name": "id",
+                        "description": "ID of the annotation instance to write files to",
+                        "dataType": "string",
+                        "required": true
+                    }, {
+                       "paramType": "body",
+                       "description": "The file to upload",
+                       "required": true,
+                       "allowMultiple": true,
+                       "dataType": "file"
+                    }],
+                    "summary": "Uploads files to an annotation instance"
+                }
+            ]
         }
     ]
 }
