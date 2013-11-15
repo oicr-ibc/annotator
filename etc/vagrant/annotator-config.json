@@ -1,6 +1,7 @@
 {
-  "baseurl" : "http://localhost:8000",
+  "baseurl" : "http://localhost:8006",
   "basedir" : "/var/local/annotator",
+  "datadir" : "/var/local/process",
   "commandsdir" : "/var/local/annotator/commands",
   "server" : {
   	"port" : 8000

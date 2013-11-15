@@ -7,7 +7,8 @@
     "should": "1.2.2",
     "nconf": "0.6.7",
     "winston": "0.7.2",
-    "uuid": "1.4.1"
+    "uuid": "1.4.1",
+    "send": "0.1.4"
   },
   "engines": {
     "node": "1.0.x",

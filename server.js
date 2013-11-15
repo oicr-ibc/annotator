@@ -23,6 +23,7 @@ nconf.defaults({
   'server:port': 3001,
   'server:address': "0.0.0.0",
   'basedir': ".",
+  'datadir': ".",
   'baseurl': "http://localhost:3001/",
   'commandsdir': path.resolve(__dirname, 'commands'),
   'debug': true,
