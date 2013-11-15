@@ -1,0 +1,65 @@
+{
+    "apiVersion":"0.2",
+    "swaggerVersion":"1.2",
+    "basePath":"http://localhost:8006",
+    "resourcePath": "/swagger",
+    "models": {
+        "Annotation": {
+            "id": "annotation",
+            "required": [
+                "identifier",
+                "annotationFilesUrl",
+                "annotationStatusUrl",
+                "annotationDeleteUrl"
+            ],
+            "properties": {
+                "identifier": {
+                    "type": "string"
+                },
+                "annotationFilesUrl": {
+                    "type": "string"
+                },
+                "annotationStatusUrl": {
+                    "type": "string"
+                },
+                "annotationDeleteUrl": {
+                    "type": "string"
+                }
+            }
+        },
+        "Welcome": {
+            "id": "welcome",
+            "required": [
+                "api",
+                "annotationUrl",
+                "version"
+            ],
+            "properties": {
+                "api": {
+                    "type": "string"
+                },
+                "annotationUrl": {
+                    "type": "string"
+                },
+                "version": {
+                    "type": "string"
+                }
+            }
+        }
+    },
+    "apis":[
+        {
+            "path":"/annotation",
+            "description":"Main annotation endpoint",
+            "operations": [
+                {
+                    "httpMethod":"GET",
+                    "nickname": "getAnnotation",
+                    "type":"Welcome",
+                    "parameters": [],
+                    "summary": "Returns descriptive information about the annotation system"
+                }
+            ]
+        }
+    ]
+}
