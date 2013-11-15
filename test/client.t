@@ -94,7 +94,30 @@ if (! $response->is_success) {
 	diag($response->content);
 }
 
+# We shouldn't have a status file yet, that should normally take a little longer. So let's
+# expect a 404. 
 
+$url = URI->new($response_perl->{annotationFilesUrl});
+$url->path_segments($url->path_segments(), '.status');
+$response = $ua->get($url);
+is($response->code, 404, "GET ".$url->path()." should return a 404");
+
+# We how wait, a maximum of 20 times, before we get a 200 and a zero back. 
+foreach my $i (1..20) {
+	sleep(1);
+	$response = $ua->get($url);
+	if ($response->code() == 200) {
+		last;
+	}
+}
+
+ok($response->is_success, "Successful GET ".$url->path());
+if (! $response->is_success) {
+	diag($response->content);
+}
+
+# At this stage, the status file should contain a zero.
+is(0 + $response->content, 0, "Final status should be zero");
 
 done_testing();
 
