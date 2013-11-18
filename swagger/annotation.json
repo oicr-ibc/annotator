@@ -75,6 +75,25 @@
             ]
         },
         {
+            "path":"/annotation/{id}",
+            "description":"Manage an annotation",
+            "operations": [
+                {
+                    "httpMethod":"DELETE",
+                    "nickname": "deleteAnnotation",
+                    "type":"void",
+                    "parameters": [{
+                        "paramType": "path",
+                        "name": "id",
+                        "description": "ID of the annotation instance",
+                        "dataType": "string",
+                        "required": true
+                    }],
+                    "summary": "Deletes an annotation instance"
+                }
+            ]
+        },
+        {
             "path":"/annotation/{id}/files",
             "description":"Upload files to an annotation instance",
             "operations": [
@@ -96,6 +115,58 @@
                        "dataType": "file"
                     }],
                     "summary": "Uploads files to an annotation instance"
+                }
+            ]
+        },
+        {
+            "path":"/annotation/{id}/files/{name}",
+            "description":"Read files to an annotation instance",
+            "operations": [
+                {
+                    "httpMethod":"GET",
+                    "nickname": "getAnnotationFile",
+                    "type":"file",
+                    "parameters": [{
+                        "paramType": "path",
+                        "name": "id",
+                        "description": "ID of the annotation instance to write files to",
+                        "dataType": "string",
+                        "required": true
+                    }, {
+                       "paramType": "path",
+                       "name": "name",
+                       "description": "The file to read",
+                       "required": true,
+                       "allowMultiple": false,
+                       "dataType": "string"
+                    }],
+                    "summary": "Reads files from an annotation instance"
+                }
+            ]
+        },
+        {
+            "path":"/annotation/{id}/status",
+            "description":"Manage the annotation status",
+            "operations": [
+                {
+                    "httpMethod":"PUT",
+                    "nickname": "setAnnotationStatus",
+                    "type":"void",
+                    "parameters": [{
+                        "paramType": "path",
+                        "name": "id",
+                        "description": "ID of the annotation instance to manage",
+                        "dataType": "string",
+                        "required": true
+                    }, {
+                       "paramType": "query",
+                       "name" : "running",
+                       "description": "Starts or stops the annotation",
+                       "required": false,
+                       "allowMultiple": false,
+                       "dataType": "boolean"
+                    }],
+                    "summary": "Start, stop, and otherwise manage the status of an annotation"
                 }
             ]
         }
