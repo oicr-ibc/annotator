@@ -5,16 +5,19 @@ Cloud aware annotation system
 
 The protocol works a bit like this:
 
-POST /annotator
-201 -> {url: "http://.../annotation/xxxx"}
+GET /annotation 
+200 -> {version: "1.0", annotationUrl: "http://.../annotation}
 
-POST /annotation/xxxx/data -- body is file data, with a MIME content type
+POST /annotation
+201 -> {annotationFilesUrl: "http://.../annotation/xxxx/files", annotationStatusUrl... }
+
+POST /annotation/xxxx/files -- body is file data, with a MIME content type
 202 -> 
 
 GET /annotation/xxx/status
 200 -> {annotationAvailable: true/false, ...}
 
-GET /annotation/xxx/annotated-data -- Accept header specifies expected result type
+GET /annotation/xxx/files/xxx -- return file data
 200/404 -> data...
 
 DELETE /annotation/xxxx -- when done
