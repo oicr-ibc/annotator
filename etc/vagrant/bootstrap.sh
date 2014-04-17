@@ -47,9 +47,9 @@ yes "n" | perl INSTALL.pl
 # Now we can download the data. Use rsync as it is much faster than FTP, and when it is 
 # available, also much less problematic in terms of funny port usage. 
 cd /var/local/variant_effect_predictor
-rsync -v rsync://ftp.ensembl.org/ensembl/pub/release-73/variation/VEP/homo_sapiens_vep_73.tar.gz .
-tar xfz homo_sapiens_vep_73.tar.gz
-rm homo_sapiens_vep_73.tar.gz
+rsync -v rsync://ftp.ensembl.org/ensembl/pub/release-75/variation/VEP/homo_sapiens_vep_75.tar.gz .
+tar xfz homo_sapiens_vep_75.tar.gz
+rm homo_sapiens_vep_75.tar.gz
 
 # We also need the FASTA files
 cd /var/local/variant_effect_predictor
